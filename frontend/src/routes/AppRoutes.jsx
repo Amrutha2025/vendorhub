@@ -22,6 +22,7 @@ const Builder = React.lazy(() => import('../pages/Builder'));
 const Analytics = React.lazy(() => import('../pages/Analytics'));
 const AIAssistant = React.lazy(() => import('../pages/AIAssistant'));
 const Admin = React.lazy(() => import('../pages/Admin'));
+const AdminVendors = React.lazy(() => import('../pages/admin/Vendors'));
 const VendorStore = React.lazy(() => import('../pages/VendorStore'));
 const NotFound = React.lazy(() => import('../pages/NotFound'));
 const Products = React.lazy(() => import('../pages/Products'));
@@ -71,7 +72,7 @@ export default function AppRoutes() {
             <Route path="/admin" element={<Admin />} />
             {/* Additional admin routes would go here */}
             <Route path="/admin/users" element={<div className="p-8"><h1 className="text-2xl font-bold">Users</h1></div>} />
-            <Route path="/admin/vendors" element={<div className="p-8"><h1 className="text-2xl font-bold">Vendors</h1></div>} />
+            <Route path="/admin/vendors" element={<AdminVendors />} />
             <Route path="/admin/analytics" element={<div className="p-8"><h1 className="text-2xl font-bold">Analytics</h1></div>} />
             <Route path="/admin/reports" element={<div className="p-8"><h1 className="text-2xl font-bold">Reports</h1></div>} />
             <Route path="/admin/settings" element={<div className="p-8"><h1 className="text-2xl font-bold">Settings</h1></div>} />

@@ -40,8 +40,49 @@ const getAdminAnalytics = asyncHandler(async (req, res) => {
   });
 });
 
+const updateVendorStatus = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+  
+  if (!['Active', 'Suspended', 'Pending'].includes(status)) {
+    return ApiResponse.badRequest(res, 'Invalid status provided');
+  }
+
+  const vendor = await Vendor.findByIdAndUpdate(
+    id, 
+    { status },
+    { new: true }
+  ).populate('ownerId', 'name email');
+
+  if (!vendor) {
+    return ApiResponse.notFound(res, 'Vendor not found');
+  }
+
+  ApiResponse.success(res, 'Vendor status updated successfully', vendor);
+});
+
+/**
+ * Delete a vendor completely
+ */
+const deleteVendor = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  
+  const vendor = await Vendor.findByIdAndDelete(id);
+  
+  if (!vendor) {
+    return ApiResponse.notFound(res, 'Vendor not found');
+  }
+
+  // Also delete associated website if exists
+  await Website.findOneAndDelete({ vendorId: id });
+
+  ApiResponse.success(res, 'Vendor deleted successfully', { id });
+});
+
 module.exports = {
   getVendors,
   getWebsites,
-  getAdminAnalytics
+  getAdminAnalytics,
+  updateVendorStatus,
+  deleteVendor
 };
